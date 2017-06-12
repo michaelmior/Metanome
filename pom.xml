@@ -105,6 +105,7 @@ limitations under the License.
     </distributionManagement>
 
     <modules>
+        <module>algorithms</module>
         <module>algorithm_helper</module>
         <module>algorithm_integration</module>
         <module>algorithm_template_root</module>
