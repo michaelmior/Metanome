@@ -21,6 +21,7 @@
 
     <modules>
         <module>BINDER</module>
+        <module>SPIDER</module>
         <module>tane</module>
     </modules>
 </project>
