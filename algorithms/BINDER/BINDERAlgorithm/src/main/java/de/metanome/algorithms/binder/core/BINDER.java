@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.apache.lucene.util.OpenBitSet;
 
@@ -62,6 +63,7 @@ import it.unimi.dsi.fastutil.longs.LongArrayList;
 // Bucketing IND ExtractoR (BINDER)
 public class BINDER {
 
+	private static Logger logger = Logger.getLogger("de.metanome.algorithms.binder");
 	protected DatabaseConnectionGenerator databaseConnectionGenerator = null;
 	protected RelationalInputGenerator[] fileInputGenerator = null;
 	protected InclusionDependencyResultReceiver resultReceiver = null;
@@ -233,8 +235,8 @@ public class BINDER {
 			this.output();
 			this.outputTime = System.currentTimeMillis() - this.outputTime;
 			
-			System.out.println(this.toString());
-			System.out.println();
+			logger.log(java.util.logging.Level.INFO, this.toString());
+			logger.log(java.util.logging.Level.INFO, "");
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -254,7 +256,7 @@ public class BINDER {
 	}
 	
 	private void initialize() throws InputGenerationException, SQLException, InputIterationException, AlgorithmConfigurationException {
-		System.out.println("Initializing ...");
+		logger.log(java.util.logging.Level.INFO, "Initializing ...");
 		
 		// Ensure the presence of an input generator
 		if ((this.databaseConnectionGenerator == null) && (this.fileInputGenerator == null))
@@ -351,7 +353,7 @@ public class BINDER {
 	}
 	
 	private void bucketize() throws InputGenerationException, InputIterationException, IOException, AlgorithmConfigurationException {
-		System.out.print("Bucketizing ... ");
+		logger.log(java.util.logging.Level.INFO, "Bucketizing ... ");
 		
 		// Initialize the counters that count the empty buckets per bucket level to identify sparse buckets and promising bucket levels for comparison
 		int[] emptyBuckets = new int[this.numBucketsPerColumn];
@@ -365,7 +367,7 @@ public class BINDER {
 		
 		for (int tableIndex = 0; tableIndex < this.tableNames.length; tableIndex++) {
 			String tableName = this.tableNames[tableIndex];
-			System.out.print(tableName + " ");
+			logger.log(java.util.logging.Level.INFO, tableName + " ");
 			
 			int numTableColumns = (this.tableColumnStartIndexes.length > tableIndex + 1) ? this.tableColumnStartIndexes[tableIndex + 1] - this.tableColumnStartIndexes[tableIndex] : this.numColumns - this.tableColumnStartIndexes[tableIndex];
 			int startTableColumnIndex = this.tableColumnStartIndexes[tableIndex];
@@ -473,7 +475,7 @@ public class BINDER {
 		// Calculate the bucket comparison order from the emptyBuckets to minimize the influence of sparse-attribute-issue
 		this.calculateBucketComparisonOrder(emptyBuckets);
 		
-		System.out.println();
+		logger.log(java.util.logging.Level.INFO, "");
 	}
 		
 	private void checkViaHashing() throws IOException {
@@ -739,7 +741,7 @@ public class BINDER {
 	}
 	
 	private void checkViaTwoStageIndexAndLists() throws IOException {
-		System.out.println("Checking ...");
+		logger.log(java.util.logging.Level.INFO, "Checking ...");
 		
 		/////////////////////////////////////////////////////////
 		// Phase 2.1: Pruning (Dismiss first candidates early) //
@@ -1129,7 +1131,7 @@ public class BINDER {
 	}
 	
 	private void detectNaryViaBucketing() throws InputGenerationException, InputIterationException, IOException, AlgorithmConfigurationException {
-		System.out.print("N-ary IND detection ...");
+		logger.log(java.util.logging.Level.INFO, "N-ary IND detection ...");
 		
 		// Clean temp
 		if (this.cleanTemp)
@@ -1165,7 +1167,7 @@ public class BINDER {
 		this.naryLoadTime = new LongArrayList();
 		this.naryCompareTime = new LongArrayList();
 		while (++naryLevel <= this.maxNaryLevel || this.maxNaryLevel <= 0) {
-			System.out.print(" L" + naryLevel);
+			logger.log(java.util.logging.Level.INFO, " L" + naryLevel);
 			
 			// Generate (n+1)-ary IND candidates from the already identified unary and n-ary IND candidates
 			final long naryGenerationTimeCurrent = System.currentTimeMillis();
@@ -1212,9 +1214,9 @@ public class BINDER {
 			naryOffset = naryOffset + attributeCombinations.size();
 
 			this.naryCompareTime.add(System.currentTimeMillis() - naryCompareTimeCurrent);
-			System.out.print("(" + (System.currentTimeMillis() - naryGenerationTimeCurrent) + " ms)");
+			logger.log(java.util.logging.Level.INFO, "(" + (System.currentTimeMillis() - naryGenerationTimeCurrent) + " ms)");
 		}
-		System.out.println();
+		logger.log(java.util.logging.Level.INFO, "");
 	}
 	
 	private void detectNaryViaSingleChecks() throws InputGenerationException, AlgorithmConfigurationException {
@@ -1722,7 +1724,7 @@ public class BINDER {
 	}
 	
 	private void output() throws CouldNotReceiveResultException, ColumnNameMismatchException {
-		System.out.println("Generating output ...");
+		logger.log(java.util.logging.Level.INFO, "Generating output ...");
 		
 		// Output unary INDs
 		for (int dep : this.dep2ref.keySet()) {
