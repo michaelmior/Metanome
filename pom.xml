@@ -94,14 +94,14 @@ limitations under the License.
     </scm>
 
     <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>packagecloud-michaelmior</id>
+            <url>packagecloud+https://packagecloud.io/michaelmior/Metanome</url>
         </repository>
+        <snapshotRepository>
+            <id>packagecloud-michaelmior</id>
+            <url>packagecloud+https://packagecloud.io/michaelmior/Metanome</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <modules>
@@ -254,6 +254,11 @@ limitations under the License.
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
                 <version>2.4</version>
+            </extension>
+            <extension>
+                <groupId>io.packagecloud.maven.wagon</groupId>
+                <artifactId>maven-packagecloud-wagon</artifactId>
+                <version>0.0.6</version>
             </extension>
         </extensions>
     </build>
