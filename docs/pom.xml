@@ -45,7 +45,7 @@ limitations under the License.
     <parent>
         <groupId>de.metanome</groupId>
         <artifactId>metanome</artifactId>
-        <version>0.0.2-calcite-SNAPSHOT</version>
+        <version>0.0.2-json-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

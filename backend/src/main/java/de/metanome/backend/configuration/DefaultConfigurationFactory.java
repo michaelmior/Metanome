@@ -17,6 +17,7 @@ package de.metanome.backend.configuration;
 
 import de.metanome.algorithm_integration.AlgorithmConfigurationException;
 import de.metanome.algorithm_integration.configuration.*;
+import de.metanome.backend.input.DefaultJsonInputGeneratorInitializer;
 import de.metanome.backend.input.DefaultRelationalInputGeneratorInitializer;
 
 import java.io.FileNotFoundException;
@@ -99,6 +100,25 @@ public class DefaultConfigurationFactory implements ConfigurationFactory {
     DefaultRelationalInputGeneratorInitializer
       inputGeneratorInitializer =
       new DefaultRelationalInputGeneratorInitializer(requirement);
+    return inputGeneratorInitializer.getConfigurationValue();
+  }
+
+  /**
+   * Builds a {@link de.metanome.backend.configuration.ConfigurationValueJsonInputGenerator}
+   * from a@{link ConfigurationRequirementJsonInput}.
+   *
+   * @param requirement the requirement to build
+   * @return the value corresponding to the requirement
+   * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException the {@link de.metanome.algorithm_integration.input.JsonInputGenerator}
+   *                                                                           cannot be initialized
+   */
+  @Override
+  public ConfigurationValueJsonInputGenerator build(
+    ConfigurationRequirementJsonInput requirement)
+    throws AlgorithmConfigurationException {
+    DefaultJsonInputGeneratorInitializer
+      inputGeneratorInitializer =
+      new DefaultJsonInputGeneratorInitializer(requirement);
     return inputGeneratorInitializer.getConfigurationValue();
   }
 

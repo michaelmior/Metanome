@@ -45,6 +45,7 @@ import java.io.Serializable;
   @JsonSubTypes.Type(value = ConfigurationRequirementListBox.class, name = "ConfigurationRequirementListBox"),
   @JsonSubTypes.Type(value = ConfigurationRequirementCheckBox.class, name = "ConfigurationRequirementCheckBox"),
   @JsonSubTypes.Type(value = ConfigurationRequirementRelationalInput.class, name = "ConfigurationRequirementRelationalInput"),
+  @JsonSubTypes.Type(value = ConfigurationRequirementJsonInput.class, name = "ConfigurationRequirementJsonInput"),
   @JsonSubTypes.Type(value = ConfigurationRequirementString.class, name = "ConfigurationRequirementString"),
   @JsonSubTypes.Type(value = ConfigurationRequirementTableInput.class, name = "ConfigurationRequirementTableInput")
 })

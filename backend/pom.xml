@@ -24,7 +24,7 @@ limitations under the License.
     <parent>
         <groupId>de.metanome</groupId>
         <artifactId>metanome</artifactId>
-        <version>1.2-calcite-SNAPSHOT</version>
+        <version>1.2-json-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -227,6 +227,10 @@ limitations under the License.
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

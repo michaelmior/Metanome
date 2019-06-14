@@ -54,6 +54,19 @@ public interface ConfigurationFactory {
 
   /**
    * Builds a {@link de.metanome.algorithm_integration.configuration.ConfigurationValue} from
+   * a@{link ConfigurationRequirementJsonInput}.
+   *
+   * @param requirement the requirement to build
+   * @return the value corresponding to the requirement
+   * @throws de.metanome.algorithm_integration.AlgorithmConfigurationException if the {@link de.metanome.algorithm_integration.configuration.ConfigurationValue}
+   *                                                                           cannot be correctly
+   *                                                                           build from the requirement
+   */
+  ConfigurationValue build(ConfigurationRequirementJsonInput requirement)
+    throws AlgorithmConfigurationException;
+
+  /**
+   * Builds a {@link de.metanome.algorithm_integration.configuration.ConfigurationValue} from
    * a@{link ConfigurationRequirementDatabaseConnection}.
    *
    * @param requirement the requirement to build
