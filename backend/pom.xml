@@ -202,7 +202,6 @@ limitations under the License.
     </build>
 
     <dependencies>
-
         <dependency>
             <groupId>com.github.jsimone</groupId>
             <artifactId>webapp-runner</artifactId>
@@ -392,6 +391,11 @@ limitations under the License.
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-osgi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.grack</groupId>
+            <artifactId>nanojson</artifactId>
+            <version>1.6</version>
         </dependency>
     </dependencies>
 </project>
