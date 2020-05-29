@@ -14,6 +14,7 @@
  }
  error_handler() {
    echo ERROR: An error was encountered with the build.
+   kill $PING_LOOP_PID 2> /dev/null
    dump_output
    exit 1
  }
