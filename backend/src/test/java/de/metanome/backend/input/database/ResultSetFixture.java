@@ -15,7 +15,7 @@
  */
 package de.metanome.backend.input.database;
 
-import com.mysql.jdbc.ResultSetMetaData;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
