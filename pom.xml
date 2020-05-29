@@ -111,16 +111,9 @@ limitations under the License.
         <module>backendwar</module>
         <module>testing_algorithms</module>
         <module>test_helper</module>
-        <module>frontend</module>
     </modules>
 
     <profiles>
-        <profile>
-            <id>deployment-local</id>
-            <modules>
-                <module>deployment</module>
-            </modules>
-        </profile>
         <profile>
             <id>release-sign-artifacts</id>
             <activation>
@@ -176,14 +169,13 @@ limitations under the License.
                         <aggregate>true</aggregate>
                         <instrumentation>
                             <exclude>de/metanome/test_helper/**/*.class</exclude>
-                            <exclude>de/metanome/frontend/**/*.class</exclude>
                         </instrumentation>
                     </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.3</version>
+                    <version>3.2.0</version>
                     <configuration>
                         <quiet>true</quiet>
                     </configuration>
@@ -203,7 +195,7 @@ limitations under the License.
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.5.0</version>
+                <version>1.6.0</version>
                 <inherited>false</inherited> <!-- only execute these in the parent -->
                 <executions>
                     <execution>
@@ -239,7 +231,7 @@ limitations under the License.
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.2.1</version>
             </plugin>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
@@ -247,7 +239,7 @@ limitations under the License.
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
-                <version>2.2.0</version>
+                <version>4.3.0</version>
             </plugin>
         </plugins>
     </build>
@@ -257,7 +249,7 @@ limitations under the License.
             <dependency>
                 <groupId>com.github.jsimone</groupId>
                 <artifactId>webapp-runner</artifactId>
-                <version>8.5.5.0</version>
+                <version>9.0.27.1</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -265,7 +257,7 @@ limitations under the License.
             <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-servlet-api</artifactId>
-                <version>8.5.5</version>
+                <version>10.0.0-M5</version>
             </dependency>
 
             <!-- Jersey REST Dependencies -->
@@ -290,7 +282,7 @@ limitations under the License.
             <dependency>
                 <groupId>org.jvnet.mimepull</groupId>
                 <artifactId>mimepull</artifactId>
-                <version>1.9.6</version>
+                <version>1.9.13</version>
                 <scope>compile</scope>
             </dependency>
 
