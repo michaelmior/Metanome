@@ -29,7 +29,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import java.net.URI;
-import java.net.URLClassLoader;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
@@ -113,7 +112,7 @@ public class ConfigurationValueFileInputGeneratorTest {
   public void testConstructorRequirement() throws AlgorithmConfigurationException, FileNotFoundException, URISyntaxException {
     // Setup
     // Expected values
-    URLClassLoader sysLoader = (URLClassLoader)Thread.currentThread().getContextClassLoader();
+    ClassLoader sysLoader = Thread.currentThread().getContextClassLoader();
     String expectedIdentifier = "some identifier";
     int expectedNumberOfValues = 2;
     

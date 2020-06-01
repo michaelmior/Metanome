@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.net.URI;
-import java.net.URLClassLoader;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
@@ -113,7 +112,7 @@ public class AlgorithmExecutionTest {
   public void testExtractColumnNames() throws AlgorithmConfigurationException, InputGenerationException, FileNotFoundException, URISyntaxException {
     // Set up
     List<Input> inputs = new ArrayList<>();
-    URLClassLoader sysLoader = (URLClassLoader)Thread.currentThread().getContextClassLoader();
+    ClassLoader sysLoader = Thread.currentThread().getContextClassLoader();
     String url = sysLoader.getResource(Constants.INPUTDATA_RESOURCE_NAME).toString();
     URI uri = new URI(url);
     String pathToCsvFolder = uri.getPath();
