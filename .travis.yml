@@ -8,11 +8,12 @@ env:
   global:
   - secure: cw80AZWTn5/TnqeRy0CMWvKiktVe84GGgK5DISFLJ9MhYdXYZwn+2r8rQk6TCguZ4GzvztStlXAzsvOIJzqOmS6bL4ZO9iT08LCsaNUb2K8vJFsTyqf9SYVHv/0Go9WTiAOIWZjvQG455FecFUdMdZxWcGgfDuScvFFx5gEmuzY=
   - secure: mWWbU2L21JPD9zIZqgiwnLZNnNcEP73firR7DQtwfYgQO2ajfEuOikjUwO6BBds4jTxi0VagHsowEC24/CEet1YJDxryYDXfkGIZZbz5oKbCv2JJDpSbGmK5lcW0BIYl5UFObGs9K6LJ7vEQAGxoo7MS8h6G0a8u53cIsVhvnJs=
+  - secure: "mpDMFf6Cj3C4z25BegSFCFFhVQm8FUn29/BRaHgi5U4GAV9fOeSLYM8UwEw3eqUlN376zCr7r/5+06PnQjzXMBKMlNCjlliVGe9Rtu+MF2VATarrSXdx6GmhFdaIRQyXDkDGTwwP4LnxXWGx5C+w/+NmUcP0B+cbWzaIVgmiWWDcoyx0JFVDdPdfYv8Oyvrqr7woL/KihyFj4JvOzvTiHkjAlm6Ke5pV9DyQ1QxR+KhnKpp5lT/sNCBZ4SlsU/rAuBhxo89N6N5iALtZd8fRmwYh4HsKPvc5KtBg5Zjg8rwCsZZKQtEcetmjKFtNF8OCJJwiIyQQcmVWaNANIwNvdR83wnOCpEaspixtpnal15DUcm34dJKL7hmQXBLSbuOY+7YSsB7Wt8q0auYo8Zti58fjU8HaoasmU5Mo6qxKGLDSUnVtHykCHKbAhe4GjVcWttGxOaR2Zzc7zeA4PK1R4HCCWZtwQQCq9skVaUIr4mLlZb12M0uE497DE3/glALsqRXGq00gtHcVpTv+fkJ/znAHdm4lNZei/DKAS8/n1/et/F7XFpHLkrb+BaIfH2EUmJpDvH00HbqV5lSuB8/BnC/AnkfNQc8922tHiposl68zUrQY3hE6MslWZQ3H/7bfE+xDev7GlrfPAn9i6CzAdfKEP16Hvwe7c4NNSRkHFXQ="
 
 script: bash ./build.sh
 
 after_success:
-- mvn -q coveralls:cobertura
+- mvn -DrepoToken=$COVERALLS_TOKEN -q cobertura:cobertura coveralls:report
 - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_JDK_VERSION" == "oraclejdk7" ]];
   then mvn deploy -q --settings deploysettings.xml; else echo "Deployments are only
   done for the master branch and oraclejdk7. "; fi
