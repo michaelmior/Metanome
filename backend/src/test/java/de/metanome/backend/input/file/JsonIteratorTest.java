@@ -67,6 +67,7 @@ public class JsonIteratorTest {
   @Test
   public void testNext() throws InputIterationException {
     // Check result
+    assertEquals(this.fixture.getExpectedColumnNames(), this.jsonIterator.columnNames());
     assertEquals(this.fixture.getExpectedStrings(), this.jsonIterator.next());
   }
 }

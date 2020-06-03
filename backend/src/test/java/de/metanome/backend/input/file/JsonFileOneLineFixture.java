@@ -62,7 +62,15 @@ public class JsonFileOneLineFixture {
     List<String> values = getExpectedStrings();
 
     for (int i = 0; i < keys.size(); i++) {
-        writer.value(keys.get(i), values.get(i));
+      String key = keys.get(i);
+      if (key.contains(".")) {
+          int splitIndex = key.indexOf(".");
+          String key1 = key.substring(0, splitIndex);
+          String key2 = key.substring(splitIndex + 1);
+          writer.object(key1).value(key2, values.get(i)).end();
+      } else {
+        writer.value(key, values.get(i));
+      }
     }
 
     return writer.end().done();
@@ -77,7 +85,7 @@ public class JsonFileOneLineFixture {
   }
 
   public ImmutableList<String> getExpectedColumnNames() {
-    return ImmutableList.of("column1", "column2", "column3");
+    return ImmutableList.of("column1", "column2", "column3.a");
   }
 
   public int getExpectedNumberOfColumns() {

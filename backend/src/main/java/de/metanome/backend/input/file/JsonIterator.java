@@ -15,6 +15,7 @@
  */
 package de.metanome.backend.input.file;
 
+import com.google.common.base.Joiner;
 import com.grack.nanojson.JsonObject;
 import com.grack.nanojson.JsonParserException;
 import com.grack.nanojson.JsonReader;
@@ -30,6 +31,7 @@ import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -69,11 +71,7 @@ public class JsonIterator implements RelationalInput {
 
       String line;
       while ((line = this.reader.readLine()) != null) {
-        JsonReader jsonReader = JsonReader.from(line);
-        jsonReader.object();
-        while (jsonReader.next()) {
-          rowTemplate.put(jsonReader.key(), null);
-        }
+        populateKeys(this.rowTemplate, line, false);
       }
 
       file.seek(0);
@@ -82,6 +80,42 @@ public class JsonIterator implements RelationalInput {
       throw new InputIterationException("Error finding attribute list", e);
     } catch (JsonParserException e) {
       throw new InputIterationException("Error finding attribute list", e);
+    }
+  }
+
+  private void populateKeys(HashMap<String, String> row, String line, boolean withValues) throws JsonParserException {
+    JsonReader jsonReader = JsonReader.from(line);
+    jsonReader.object();
+    populateKeysWithPath(row, jsonReader, withValues, Collections.emptyList());
+  }
+
+  private void populateKeysWithPath(HashMap<String, String> row, JsonReader jsonReader, boolean withValues, List<String> path) throws JsonParserException {
+    jsonReader.object();
+    while (jsonReader.next()) {
+      ArrayList<String> newPath = new ArrayList<>(path);
+      newPath.add(jsonReader.key());
+      String value = null;
+
+      JsonReader.Type type = jsonReader.current();
+      switch (type){
+        case OBJECT:
+          populateKeysWithPath(row, jsonReader, withValues, newPath);
+          break;
+
+        default:
+          if (withValues) {
+            Object valueObj = jsonReader.value();
+            if (valueObj != null) {
+                value = valueObj.toString();
+            }
+            if (value != null && value.equals(this.nullValue)) {
+              value = null;
+            }
+          }
+
+          String key = Joiner.on('.').join(newPath);
+          row.put(key, value);
+      }
     }
   }
 
@@ -137,17 +171,7 @@ public class JsonIterator implements RelationalInput {
       if (line == null) {
         return null;
       }
-
-      JsonReader jsonReader = JsonReader.from(line);
-      jsonReader.object();
-      while (jsonReader.next()) {
-          String key = jsonReader.key();
-          String value = jsonReader.value().toString();
-          if (value.equals(this.nullValue)) {
-            value = null;
-          }
-          row.put(key, value);
-      }
+      populateKeys(row, line, true);
       currentLineNumber++;
     } catch (IOException e) {
       throw new InputIterationException("Could not read next line in file input", e);
