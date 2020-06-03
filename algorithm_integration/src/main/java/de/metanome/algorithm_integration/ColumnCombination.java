@@ -77,6 +77,7 @@ public class ColumnCombination implements Serializable, Comparable<Object> {
     for (ColumnIdentifier ci : this.columnIdentifiers) {
       cis.add(ci.toString(tableMapping, columnMapping));
     }
+    Collections.sort(cis);
     return Joiner.on(COLUMN_CONNECTOR).join(cis);
   }
 
